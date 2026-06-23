@@ -1548,15 +1548,33 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') quickModal.c
    FORM SUBMIT HELPER
 ═══════════════════════════════════════════ */
 async function submitForm({ name, contact, service, comment = '' }, successEl, formEl) {
-  const btn = formEl.querySelector('.btn-submit');
-  btn.disabled = true;
-  btn.classList.add('loading');
+    const btn = formEl.querySelector('.btn-submit');
+    btn.disabled = true;
+    btn.classList.add('loading');
 
-  try {
-    const res = await fetch('/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, contact, service, comment }),
+    const token = "8781203688:AAE1LiqgIJ84TkRew2YKBY-EZW9mlRpY1vE";
+    const chat_id = "6080897180";
+    const text = 🔔 Новая заявка!\n👤 Имя: ${name}\n📱 Контакт: ${contact}\n💼 Услуга: ${service}\n💬 Комментарий: ${comment};
+    const url = https://telegram.org{token}/sendMessage;
+
+    try {
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: chat_id, text: text })
+        });
+
+        if (!res.ok) throw new Error('Ошибка отправки в Telegram');
+
+        formEl.style.display = 'none';
+        successEl.classList.add('visible');
+    } catch (data) {
+        alert('Не удалось отправить заявку через Telegram.');
+    } finally {
+        btn.disabled = false;
+        btn.classList.remove('loading');
+    }
+}
     });
     const data = await res.json();
     if (!data.ok) throw new Error(data.error || 'Ошибка сервера');
