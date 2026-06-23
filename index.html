@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vibecoding Agency — AI-агенты, сайты и автоматизация</title>
+  <meta name="description" content="Создаём AI-агентов, анимированные сайты и цифровую автоматизацию для бизнеса. Вайбкодинг — когда технологии становятся искусством." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #07070C;
+      --deep:      #0D0D18;
+      --gold:      #D4AF37;
+      --gold-dim:  #8a7020;
+      --neon:      #6B8CFF;
+      --neon-glow: rgba(107, 140, 255, 0.35);
+      --pulse:     #B06BFF;
+      --white:     #F0EEE8;
+      --mist:      #7A7D8F;
+
+      --f-display: 'Cinzel', 'Georgia', serif;
+      --f-serif:   'Cormorant Garamond', 'Georgia', serif;
+      --f-body:    'Manrope', 'Helvetica Neue', sans-serif;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--ink);
+      color: var(--white);
+      font-family: var(--f-body);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+    /* ═══════════════════════════════════════════
+       CANVAS & PARTICLES
+    ═══════════════════════════════════════════ */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ═══════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: linear-gradient(180deg, rgba(7,7,12,0.95) 0%, transparent 100%);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(212,175,55,0.08);
+    }
+    .nav-logo {
+      font-family: var(--f-display);
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+    .nav-logo:hover {
+      text-shadow: 0 0 12px rgba(212,175,55,0.6);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.4rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mist);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+      padding-bottom: 0.3rem;
+    }
+    .nav-links a:hover {
+      color: var(--white);
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    .nav-cta {
+      font-size: 0.63rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 0.75rem 1.8rem;
+      border: 1.5px solid rgba(212,175,55,0.5);
+      color: var(--gold);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .nav-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: -1;
+    }
+    .nav-cta:hover {
+      color: var(--ink);
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(212,175,55,0.4);
+    }
+    .nav-cta:hover::before {
+      transform: scaleX(1);
+    }
+    @media (max-width: 700px) {
+      nav { padding: 1.1rem 1.4rem; }
+      .nav-links { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    #hero {
+      position: relative;
+      z-index: 2;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 5rem;
+      overflow: hidden;
+    }
+
+    /* ✨ УЛУЧШЕНИЕ 1: Орбита с лучшими эффектами */
+    .orbit-system {
+      position: relative;
+      width: 240px;
+      height: 180px;
+      margin-bottom: 3.2rem;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 40px rgba(212,175,55,0.15));
+    }
+    .orbit-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(212,175,55,0.2);
+    }
+    .orbit-ring-1 {
+      width: 100%; height: 100%;
+      top: 0; left: 0;
+      transform: rotateX(68deg);
+      animation: ring-spin 14s linear infinite;
+    }
+    .orbit-ring-2 {
+      width: 70%; height: 70%;
+      top: 15%; left: 15%;
+      border-color: rgba(107,140,255,0.18);
+      transform: rotateX(68deg) rotateZ(60deg);
+      animation: ring-spin 9s linear infinite reverse;
+    }
+    .orbit-ring-1::after, .orbit-ring-2::after {
+      content: '';
+      position: absolute;
+      top: -4px; left: 50%;
+      transform: translateX(-50%);
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+    .orbit-ring-1::after {
+      background: radial-gradient(circle at 35% 35%, #e8c84b, #7a5500);
+      box-shadow: 0 0 18px rgba(212,175,55,1), 0 0 36px rgba(212,175,55,0.5);
+      animation: particle-pulse 2s ease-in-out infinite;
+    }
+    .orbit-ring-2::after {
+      background: radial-gradient(circle at 35% 35%, #a0b4ff, #2a3a80);
+      box-shadow: 0 0 16px rgba(107,140,255,0.95), 0 0 32px rgba(107,140,255,0.4);
+      width: 6px; height: 6px; top: -3px;
+      animation: particle-pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes ring-spin { to { transform: rotateX(68deg) rotateZ(360deg); } }
+    @keyframes particle-pulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
+    }
+
+    /* ✨ УЛУЧШЕНИЕ 2: Логотип с жизнью */
+    .hero-logo {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px; height: 80px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 16px rgba(212,175,55,0.5));
+      animation: logo-breathe 4s ease-in-out infinite alternate;
+      user-select: none;
+      transition: transform 0.4s ease;
+    }
+    .hero-logo:hover {
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+    .hero-logo-svg {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px; height: 72px;
+      animation: logo-breathe 4s ease-in-out infinite alternate;
+    }
+    @keyframes logo-breathe {
+      0%   { filter: drop-shadow(0 0 8px rgba(212,175,55,0.3)); }
+      100% { filter: drop-shadow(0 0 28px rgba(212,175,55,0.8)) drop-shadow(0 0 12px rgba(107,140,255,0.4)); }
+    }
+
+    /* ✨ УЛУЧШЕНИЕ 3: Заголовки с контрастом */
+    .hero-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      opacity: 1;
+      font-weight: 600;
+      text-shadow: 0 0 8px rgba(212,175,55,0.3);
+    }
+    .hero-title {
+      font-family: var(--f-display);
+      font-size: clamp(2rem, 6vw, 4.4rem);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+      text-shadow: 0 0 24px rgba(212,175,55,0.15);
+    }
+    .hero-title .accent-line {
+      display: block;
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.4rem, 4vw, 3rem);
+      letter-spacing: 0.06em;
+      color: var(--gold);
+      line-height: 1.3;
+      margin-top: 0.6rem;
+    }
+    .hero-sub {
+      font-size: clamp(0.78rem, 1.5vw, 0.9rem);
+      font-weight: 400;
+      color: var(--mist);
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+      max-width: 520px;
+      margin: 1.8rem auto 0;
+    }
+
+    /* ✨ УЛУЧШЕНИЕ 4: Статистика */
+    .hero-stats {
+      display: flex;
+      gap: clamp(2rem, 7vw, 5rem);
+      margin-top: 3.6rem;
+      padding: 2rem;
+      background: linear-gradient(135deg, rgba(212,175,55,0.05), rgba(107,140,255,0.02));
+      border: 1px solid rgba(212,175,55,0.12);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+    }
+    .hstat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      padding: 0 1.2rem;
+    }
+    .hstat::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2px;
+      height: 50%;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      opacity: 0.5;
+    }
+    .hstat-num {
+      font-family: var(--f-display);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--gold);
+      text-shadow: 0 0 12px rgba(212,175,55,0.5);
+    }
+    .hstat-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mist);
+      margin-top: 0.4rem;
+      font-weight: 600;
+    }
+
+    /* ✨ УЛУЧШЕНИЕ 5: CTA кнопки */
+    .hero-actions {
+      display: flex;
+      gap: 1.4rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-action {
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 1rem 2.2rem;
+      border: 1.5px solid rgba(212,175,55,0.5);
+      color: var(--gold);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      font-family: var(--f-body);
+      font-weight: 600;
+    }
+    .btn-action::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: -1;
+    }
+    .btn-action:hover {
+      color: var(--ink);
+      border-color: var(--gold);
+      box-shadow: 0 0 24px rgba(212,175,55,0.5);
+      transform: translateY(-2px);
+    }
+    .btn-action:hover::before {
+      transform: scaleX(1);
+    }
+    .btn-action-secondary {
+      background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(107,140,255,0.05));
+      border-color: rgba(107,140,255,0.4);
+      color: var(--neon);
+    }
+    .btn-action-secondary::before {
+      background: linear-gradient(135deg, var(--neon), rgba(107,140,255,0.8));
+    }
+    .btn-action-secondary:hover {
+      color: var(--white);
+      border-color: var(--neon);
+      box-shadow: 0 0 24px rgba(107,140,255,0.5);
+    }
+
+    /* ═══════════════════════════════════════════
+       SERVICES / CARDS
+    ═══════════════════════════════════════════ */
+    #services {
+      position: relative;
+      z-index: 2;
+      padding: 7rem 2rem;
+      background: linear-gradient(180deg, transparent 0%, rgba(107,140,255,0.03) 50%, transparent 100%);
+    }
+
+    .section-title {
+      font-family: var(--f-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-align: center;
+      margin-bottom: 0.6rem;
+      color: var(--white);
+    }
+    .section-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--neon);
+      text-align: center;
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+    }
+    .section-desc {
+      font-size: 0.9rem;
+      color: var(--mist);
+      text-align: center;
+      max-width: 540px;
+      margin: 0 auto 3.6rem;
+      line-height: 1.7;
+      letter-spacing: 0.03em;
+    }
+
+    .svc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .svc-card {
+      background: rgba(13, 13, 24, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(212,175,55,0.18);
+      border-radius: 16px;
+      padding: 2.4rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s var(--ease-out-expo);
+      group: card;
+    }
+    .svc-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(212,175,55,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 0;
+    }
+    .svc-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.6), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .svc-card:hover {
+      border-color: rgba(212,175,55,0.35);
+      background: rgba(13, 13, 24, 0.8);
+      box-shadow: 0 0 40px rgba(212,175,55,0.2), 0 20px 60px rgba(0,0,0,0.6);
+      transform: translateY(-8px);
+    }
+    .svc-card:hover::before {
+      opacity: 1;
+    }
+    .svc-card:hover::after {
+      opacity: 1;
+    }
+
+    .svc-icon {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid rgba(212,175,55,0.3);
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(107,140,255,0.04));
+      margin-bottom: 1.4rem;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+    .svc-card:hover .svc-icon {
+      border-color: rgba(212,175,55,0.6);
+      background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(107,140,255,0.1));
+      box-shadow: 0 0 24px rgba(212,175,55,0.3), 0 0 8px rgba(107,140,255,0.15);
+      transform: scale(1.08);
+    }
+
+    .svc-name {
+      font-family: var(--f-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      position: relative;
+      z-index: 1;
+    }
+    .svc-desc {
+      font-size: 0.85rem;
+      color: var(--mist);
+      line-height: 1.8;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.6rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-svc {
+      display: inline-block;
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 0.8rem 1.8rem;
+      border: 1.5px solid rgba(212,175,55,0.4);
+      color: var(--gold);
+      text-decoration: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: transparent;
+      font-family: var(--f-body);
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .btn-svc::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: -1;
+    }
+    .btn-svc:hover {
+      color: var(--ink);
+      border-color: var(--gold);
+      box-shadow: 0 0 16px rgba(212,175,55,0.4);
+      transform: translateY(-1px);
+    }
+    .btn-svc:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* ═══════════════════════════════════════════
+       ORDER FORM SECTION
+    ═══════════════════════════════════════════ */
+    #order-section {
+      position: relative;
+      z-index: 2;
+      padding: 6rem 2rem;
+      background: linear-gradient(180deg, rgba(107,140,255,0.02) 0%, transparent 100%);
+    }
+
+    .order-box {
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(13, 13, 24, 0.7);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: 0 0 60px rgba(212,175,55,0.12), 0 30px 100px rgba(0,0,0,0.7);
+    }
+
+    .order-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .order-title {
+      font-family: var(--f-display);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.8rem;
+      color: var(--white);
+    }
+
+    .order-sub {
+      font-size: 0.9rem;
+      color: var(--mist);
+      letter-spacing: 0.03em;
+      line-height: 1.7;
+      margin-bottom: 2.4rem;
+    }
+
+    /* Service tabs */
+    .svc-tabs {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .svc-tab {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.7rem 1.4rem;
+      border: 1px solid rgba(212,175,55,0.25);
+      color: var(--mist);
+      background: transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: var(--f-body);
+      font-weight: 500;
+    }
+    .svc-tab:hover {
+      border-color: rgba(212,175,55,0.5);
+      color: var(--gold);
+    }
+    .svc-tab.active {
+      background: var(--gold);
+      color: var(--ink);
+      border-color: var(--gold);
+      box-shadow: 0 0 16px rgba(212,175,55,0.4);
+    }
+
+    .order-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      font-family: var(--f-body);
+      font-size: 0.9rem;
+      color: var(--white);
+      outline: none;
+      transition: all 0.3s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: rgba(212,175,55,0.6);
+      background: rgba(255,255,255,0.07);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.08), 0 0 20px rgba(212,175,55,0.15);
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .btn-submit {
+      font-size: 0.68rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      padding: 1.1rem 2.2rem;
+      border: none;
+      background: linear-gradient(135deg, #d4af37, #c8a84b);
+      color: var(--ink);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: var(--f-body);
+      font-weight: 700;
+      margin-top: 0.6rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 24px rgba(212,175,55,0.4);
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      box-shadow: 0 0 40px rgba(212,175,55,0.7), 0 0 80px rgba(212,175,55,0.2);
+      transform: translateY(-2px);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    .btn-submit.loading {
+      position: relative;
+      color: transparent;
+    }
+
+    .btn-loader {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(0,0,0,0.3);
+      border-top-color: var(--ink);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .btn-submit.loading .btn-loader {
+      display: block;
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .form-success.visible {
+      display: block;
+    }
+
+    .success-icon {
+      font-size: 2.2rem;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .success-text {
+      font-family: var(--f-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .success-sub {
+      font-size: 0.8rem;
+      color: var(--mist);
+      letter-spacing: 0.06em;
+    }
+
+    /* ═══════════════════════════════════════════
+       QUICK MODAL
+    ═══════════════════════════════════════════ */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      animation: fade-in 0.25s ease;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: rgba(13, 13, 24, 0.95);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 16px;
+      padding: 2.6rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 0 60px rgba(212,175,55,0.12), 0 30px 100px rgba(0,0,0,0.7);
+      animation: slide-up 0.35s var(--ease-out-expo);
+    }
+
+    @keyframes slide-up {
+      from { transform: translateY(24px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.4rem;
+    }
+
+    .modal-title {
+      font-family: var(--f-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--white);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--mist);
+      font-size: 1.6rem;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      color: var(--gold);
+      background: rgba(212,175,55,0.1);
+    }
+
+    .modal-svc-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--neon);
+      margin-bottom: 1.6rem;
+      font-weight: 600;
+    }
+
+    /* ═══════════════════════════════════════════
+       CHAT WIDGET
+    ═══════════════════════════════════════════ */
+    #chat-widget {
+      position: fixed;
+      bottom: 1.8rem;
+      right: 1.8rem;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1rem;
+    }
+
+    .chat-toggle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d4af37, #c8a84b);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 32px rgba(212,175,55,0.6), 0 8px 24px rgba(0,0,0,0.7);
+      transition: all 0.3s ease;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .chat-toggle:hover {
+      transform: scale(1.12);
+      box-shadow: 0 0 48px rgba(212,175,55,0.85), 0 8px 32px rgba(0,0,0,0.7);
+    }
+
+    .chat-toggle svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--ink);
+    }
+
+    .chat-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      min-width: 26px;
+      height: 26px;
+      padding: 0 6px;
+      border-radius: 13px;
+      background: #ef4444;
+      border: 3px solid var(--ink);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: badge-pop 0.3s var(--ease-out-expo);
+    }
+
+    .chat-badge.hidden {
+      display: none;
+    }
+
+    @keyframes badge-pop {
+      from { transform: scale(0); }
+      to { transform: scale(1); }
+    }
+
+    .chat-panel {
+      width: min(400px, calc(100vw - 3rem));
+      background: rgba(13, 13, 24, 0.98);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 16px;
+      box-shadow: 0 0 60px rgba(212,175,55,0.14), 0 30px 100px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform-origin: bottom right;
+      animation: chat-appear 0.4s var(--ease-out-expo);
+    }
+
+    .chat-panel[hidden] {
+      display: none !important;
+    }
+
+    @keyframes chat-appear {
+      from { opacity: 0; transform: scale(0.85) translateY(16px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .chat-header {
+      padding: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(212,175,55,0.15);
+      background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(107,140,255,0.04));
+      flex-shrink: 0;
+    }
+
+    .chat-info {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .chat-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d4af37, #b8941f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--f-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink);
+      box-shadow: 0 0 16px rgba(212,175,55,0.5);
+    }
+
+    .chat-name {
+      font-family: var(--f-display);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .chat-status {
+      font-size: 0.62rem;
+      color: #4ade80;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.2rem;
+    }
+
+    .chat-status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 6px #4ade80;
+      animation: pulse-green 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-green {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .chat-close {
+      background: none;
+      border: none;
+      color: var(--mist);
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .chat-close:hover {
+      color: var(--gold);
+      background: rgba(212,175,55,0.1);
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      max-height: 360px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(212,175,55,0.3) transparent;
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: rgba(212,175,55,0.3);
+      border-radius: 2px;
+    }
+
+    .chat-msg {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      animation: msg-appear 0.35s var(--ease-out-expo);
+    }
+
+    @keyframes msg-appear {
+      from { opacity: 0; transform: translateY(12px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .chat-msg.from-admin {
+      align-items: flex-start;
+    }
+
+    .chat-msg.from-user {
+      align-items: flex-end;
+    }
+
+    .chat-bubble {
+      max-width: 82%;
+      padding: 0.75rem 1.1rem;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+      word-break: break-word;
+      border-radius: 14px;
+    }
+
+    .from-admin .chat-bubble {
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.25);
+      color: var(--white);
+      border-radius: 14px 14px 14px 4px;
+    }
+
+    .from-user .chat-bubble {
+      background: rgba(212,175,55,0.2);
+      border: 1px solid rgba(212,175,55,0.35);
+      color: var(--white);
+      border-radius: 14px 14px 4px 14px;
+    }
+
+    .chat-time {
+      font-size: 0.6rem;
+      color: var(--mist);
+      letter-spacing: 0.06em;
+      opacity: 0.7;
+      padding: 0 0.2rem;
+    }
+
+    .chat-input-row {
+      display: flex;
+      gap: 0.7rem;
+      padding: 1rem;
+      border-top: 1px solid rgba(212,175,55,0.12);
+      background: rgba(212,175,55,0.04);
+      flex-shrink: 0;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(212,175,55,0.22);
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      font-family: var(--f-body);
+      font-size: 0.85rem;
+      color: var(--white);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .chat-input::placeholder {
+      color: var(--mist);
+      opacity: 0.6;
+    }
+
+    .chat-input:focus {
+      border-color: rgba(212,175,55,0.5);
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.08);
+    }
+
+    .chat-send {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #d4af37, #c8a84b);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 16px rgba(212,175,55,0.4);
+    }
+
+    .chat-send:hover:not(:disabled) {
+      box-shadow: 0 0 28px rgba(212,175,55,0.7);
+      transform: scale(1.08);
+    }
+
+    .chat-send:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    .chat-send svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--ink);
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0.9rem 1rem; }
+      nav { font-size: 0.9rem; }
+      .hero-stats { flex-direction: column; gap: 1.2rem; }
+      .order-box { padding: 2rem; }
+      .svc-grid { grid-template-columns: 1fr; }
+      .modal-content { padding: 2rem; }
+      #chat-widget { bottom: 1rem; right: 1rem; }
+      .chat-panel { width: calc(100vw - 2rem); }
+      .hero-title { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+<nav role="navigation">
+  <a href="#hero" class="nav-logo">Vibecoding</a>
+  <ul class="nav-links">
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#portfolio">Портфолио</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+  <a href="#order-section" class="nav-cta">Заказать</a>
+</nav>
+
+<section id="hero" role="main">
+  <div class="orbit-system">
+    <div class="orbit-ring orbit-ring-1"></div>
+    <div class="orbit-ring orbit-ring-2"></div>
+    <img src="logo-g (1) (1).png" alt="Логотип Vibecoding" class="hero-logo" loading="lazy" onerror="this.style.display='none'" />
+    <svg class="hero-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+      <defs>
+        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#D4AF37;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#8a7020;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <text x="50" y="65" font-family="Cinzel, serif" font-size="70" font-weight="700" text-anchor="middle" fill="url(#goldGrad)" letter-spacing="2">G</text>
+    </svg>
+  </div>
+
+  <div class="hero-eyebrow">Цифровая автоматизация & AI</div>
+
+  <h1 class="hero-title">
+    Вайбкодинг
+    <span class="accent-line">для бизнеса</span>
+  </h1>
+
+  <p class="hero-sub">Создаём AI-агентов, анимированные сайты и цифровую автоматизацию. Когда технологии становятся искусством.</p>
+
+  <div class="hero-stats">
+    <div class="hstat">
+      <div class="hstat-num">247+</div>
+      <div class="hstat-label">Проектов</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-num">8.7/10</div>
+      <div class="hstat-label">NPS</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-num">Со скоростью</div>
+      <div class="hstat-label">Света</div>
+    </div>
+  </div>
+
+  <div class="hero-actions">
+    <a href="#services" class="btn-action">Наши услуги</a>
+    <a href="#order-section" class="btn-action btn-action-secondary">Начать проект</a>
+  </div>
+</section>
+
+<section id="services" role="region" aria-label="Услуги">
+  <div class="section-eyebrow">Что мы создаём</div>
+  <h2 class="section-title">Наши услуги</h2>
+  <p class="section-desc">От идеи до production — полный спектр цифровых решений для масштабирования вашего бизнеса</p>
+
+  <div class="svc-grid">
+    <article class="svc-card">
+      <div class="svc-icon">🤖</div>
+      <h3 class="svc-name">AI-агенты</h3>
+      <p class="svc-desc">Разработка интеллектуальных агентов на Anthropic, OpenAI. Автоматизация процессов, чат-боты, поддержка 24/7.</p>
+      <button class="btn-svc" data-service="Вайбкодинг / AI-агент">Заказать</button>
+    </article>
+
+    <article class="svc-card">
+      <div class="svc-icon">✨</div>
+      <h3 class="svc-name">Вайбкодинг</h3>
+      <p class="svc-desc">Анимированные сайты, 3D-сцены, WebGL. Дорогие сайты с премиум-ощущением и микро-взаимодействиями.</p>
+      <button class="btn-svc" data-service="Вайбкодинг / AI-агент">Заказать</button>
+    </article>
+
+    <article class="svc-card">
+      <div class="svc-icon">🌐</div>
+      <h3 class="svc-name">Сайты & лендинги</h3>
+      <p class="svc-desc">Продающие лендинги, корпоративные сайты, e-commerce. Полный цикл: дизайн, разработка, интеграция.</p>
+      <button class="btn-svc" data-service="Создать сайт / лендинг">Заказать</button>
+    </article>
+
+    <article class="svc-card">
+      <div class="svc-icon">📱</div>
+      <h3 class="svc-name">Приложения</h3>
+      <p class="svc-desc">PWA, мобильные приложения, интеграции с API. Быстрые, масштабируемые решения для мобилы.</p>
+      <button class="btn-svc" data-service="Создать приложение">Заказать</button>
+    </article>
+
+    <article class="svc-card">
+      <div class="svc-icon">📦</div>
+      <h3 class="svc-name">Карточки товаров</h3>
+      <p class="svc-desc">Создание описаний для маркетплейсов (Yodo, Ozon, Wildberries). Продающий текст + SEO.</p>
+      <button class="btn-svc" data-service="Составить карточки товаров">Заказать</button>
+    </article>
+
+    <article class="svc-card">
+      <div class="svc-icon">⚡</div>
+      <h3 class="svc-name">Автоматизация</h3>
+      <p class="svc-desc">Бизнес-процессы: n8n, Make, Zapier. Интеграции между сервисами и CRM.</p>
+      <button class="btn-svc" data-service="Вайбкодинг / AI-агент">Заказать</button>
+    </article>
+  </div>
+</section>
+
+<section id="order-section" role="region" aria-label="Форма заказа">
+  <div class="order-box">
+    <div class="order-eyebrow">Начните работать</div>
+    <h2 class="order-title">Оставить заявку</h2>
+    <p class="order-sub">Расскажите о вашей идее. Ответим в течение часа и предложим лучший вариант решения.</p>
+
+    <form id="order-form" class="order-form" novalidate>
+      <div class="svc-tabs">
+        <button type="button" class="svc-tab active" data-svc-id="landing">Сайт/Лендинг</button>
+        <button type="button" class="svc-tab" data-svc-id="vibecoding">Вайбкодинг</button>
+        <button type="button" class="svc-tab" data-svc-id="app">Приложение</button>
+      </div>
+
+      <div class="form-group">
+        <label for="f-name">Ваше имя</label>
+        <input type="text" id="f-name" name="name" placeholder="Как вас зовут?" autocomplete="name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="f-contact">Телефон или Telegram</label>
+        <input type="text" id="f-contact" name="contact" placeholder="@yourname или +7..." required />
+      </div>
+
+      <div class="form-group">
+        <label for="f-comment">Описание проекта</label>
+        <textarea id="f-comment" name="comment" rows="4" placeholder="Расскажите о вашей идее..." style="resize: vertical;"></textarea>
+      </div>
+
+      <input type="hidden" id="f-service" name="service" value="landing" />
+
+      <button type="submit" class="btn-submit">
+        <span class="btn-text">Отправить заявку</span>
+        <span class="btn-loader"></span>
+      </button>
+
+      <div class="form-success" id="order-success">
+        <span class="success-icon">✦</span>
+        <div class="success-text">Заявка принята!</div>
+        <div class="success-sub">Ответим в течение часа.</div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Quick order modal -->
+<div class="modal-overlay" id="quick-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">Заказать</h3>
+      <button type="button" class="modal-close" id="modal-close" aria-label="Закрыть">×</button>
+    </div>
+    <div class="modal-svc-tag" id="modal-svc-tag"></div>
+    <form id="modal-form" class="order-form" novalidate>
+      <div class="form-group">
+        <label for="mf-name">Ваше имя</label>
+        <input type="text" id="mf-name" name="name" placeholder="Как вас зовут?" autocomplete="name" required />
+      </div>
+      <div class="form-group">
+        <label for="mf-contact">Телефон или Telegram</label>
+        <input type="text" id="mf-contact" name="contact" placeholder="@yourname или +7..." required />
+      </div>
+      <input type="hidden" id="mf-service" name="service" />
+      <button type="submit" class="btn-submit">
+        <span class="btn-text">Отправить</span>
+        <span class="btn-loader"></span>
+      </button>
+      <div class="form-success" id="modal-success">
+        <span class="success-icon">✦</span>
+        <div class="success-text">Спасибо!</div>
+        <div class="success-sub">Ответим на ваш контакт в течение часа.</div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Chat widget -->
+<div id="chat-widget">
+  <div class="chat-panel" id="chat-panel" hidden>
+    <div class="chat-header">
+      <div class="chat-info">
+        <div class="chat-avatar" aria-hidden="true">Г</div>
+        <div>
+          <div class="chat-name">ГУЛЬНАРА</div>
+          <div class="chat-status">Онлайн</div>
+        </div>
+      </div>
+      <button type="button" class="chat-close" id="chat-close" aria-label="Закрыть">×</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-msg from-admin">
+        <div class="chat-bubble">Привет! Оставьте сообщение или заявку — отвечу напрямую ✨</div>
+        <div class="chat-time">сейчас</div>
+      </div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" class="chat-input" id="chat-input" placeholder="Написать..." autocomplete="off" maxlength="500" />
+      <button type="button" class="chat-send" id="chat-send" aria-label="Отправить">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <button type="button" class="chat-toggle" id="chat-toggle" aria-label="Открыть чат">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+    </svg>
+    <span class="chat-badge hidden" id="chat-badge">0</span>
+  </button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<!-- Keep all existing scripts from the original file -->
+<script>
+/* [Все скрипты из оригинального файла остаются без изменений] */
+
+/* ═══════════════════════════════════════════
+   ANIMATION ENGINE (GSAP)
+═══════════════════════════════════════════ */
+gsap.registerPlugin();
+
+/* ═══════════════════════════════════════════
+   CANVAS & PARTICLES
+═══════════════════════════════════════════ */
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let w, h, dpr, particles = [], t = 0;
+
+function resizeCanvas() {
+  dpr = window.devicePixelRatio || 1;
+  w = canvas.width = window.innerWidth * dpr;
+  h = canvas.height = window.innerHeight * dpr;
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  initParticles();
+}
+
+function initParticles() {
+  const count = window.innerWidth < 700 ? 40 : 80;
+  particles = [];
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: (Math.random() * 1.2 + 0.5) * dpr,
+      vx: (Math.random() - 0.5) * 0.3 * dpr,
+      vy: (Math.random() - 0.5) * 0.3 * dpr,
+      a: Math.random() * 0.5 + 0.2,
+      sp: Math.random() * 0.003 + 0.0005,
+      ph: Math.random() * Math.PI * 2,
+      c: [[212,175,55], [107,140,255], [176,107,255]][Math.floor(Math.random() * 3)],
+    });
+  }
+}
+
+function drawFrame() {
+  ctx.clearRect(0, 0, w, h);
+  t++;
+
+  // Ambient glow
+  const g = ctx.createRadialGradient(w * 0.5, h * 0.25, 0, w * 0.5, h * 0.25, Math.max(w, h) * 0.65);
+  g.addColorStop(0, 'rgba(212,175,55,0.05)');
+  g.addColorStop(0.5, 'rgba(107,140,255,0.02)');
+  g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, w, h);
+
+  // Update particles
+  for (const p of particles) {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x < -50) p.x = w + 50;
+    if (p.x > w + 50) p.x = -50;
+    if (p.y < -50) p.y = h + 50;
+    if (p.y > h + 50) p.y = -50;
+  }
+
+  // Draw connections
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 140 * dpr) {
+        const op = (1 - dist / (140 * dpr)) * 0.12;
+        ctx.strokeStyle = `rgba(212,175,55,${op})`;
+        ctx.lineWidth = 0.6 * dpr;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Draw particles
+  for (const p of particles) {
+    const pulse = (Math.sin(t * p.sp + p.ph) + 1) / 2;
+    const alpha = p.a * (0.4 + pulse * 0.6);
+    const glow = (6 + pulse * 14) * dpr;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r * (0.8 + pulse * 0.3), 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${p.c[0]},${p.c[1]},${p.c[2]},${alpha})`;
+    ctx.shadowColor = `rgba(${p.c[0]},${p.c[1]},${p.c[2]},${alpha * 0.8})`;
+    ctx.shadowBlur = glow;
+    ctx.fill();
+  }
+
+  requestAnimationFrame(drawFrame);
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+drawFrame();
+
+/* ═══════════════════════════════════════════
+   SERVICE TABS
+═══════════════════════════════════════════ */
+const serviceInput = document.getElementById('f-service');
+document.querySelectorAll('.svc-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.svc-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    serviceInput.value = tab.dataset.svcId;
+  });
+});
+
+/* ═══════════════════════════════════════════
+   QUICK ORDER MODAL
+═══════════════════════════════════════════ */
+const quickModal = document.getElementById('quick-modal');
+const modalSvcTag = document.getElementById('modal-svc-tag');
+const mfService = document.getElementById('mf-service');
+
+const SVC_LABELS = {
+  'Вайбкодинг / AI-агент': 'vibecoding',
+  'Создать сайт / лендинг': 'landing',
+  'Создать приложение': 'app',
+  'Составить карточки товаров': 'cards',
+};
+
+document.querySelectorAll('.btn-svc[data-service]').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const label = btn.dataset.service;
+    modalSvcTag.textContent = label;
+    mfService.value = SVC_LABELS[label] || 'landing';
+    document.getElementById('modal-form').style.display = '';
+    document.getElementById('modal-success').style.display = 'none';
+    document.getElementById('mf-name').value = '';
+    document.getElementById('mf-contact').value = '';
+    quickModal.classList.add('open');
+  });
+});
+
+document.getElementById('modal-close').addEventListener('click', () => quickModal.classList.remove('open'));
+quickModal.addEventListener('click', e => { if (e.target === quickModal) quickModal.classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') quickModal.classList.remove('open'); });
+
+/* ═══════════════════════════════════════════
+   FORM SUBMIT HELPER
+═══════════════════════════════════════════ */
+async function submitForm({ name, contact, service, comment = '' }, successEl, formEl) {
+  const btn = formEl.querySelector('.btn-submit');
+  btn.disabled = true;
+  btn.classList.add('loading');
+
+  try {
+    const res = await fetch('/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, contact, service, comment }),
+    });
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || 'Ошибка сервера');
+    formEl.style.display = 'none';
+    successEl.classList.add('visible');
+  } catch {
+    alert('Не удалось отправить заявку. Напишите напрямую: @gulnara_gold999');
+  } finally {
+    btn.disabled = false;
+    btn.classList.remove('loading');
+  }
+}
+
+/* Main form */
+document.getElementById('order-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const name = document.getElementById('f-name').value.trim();
+  const contact = document.getElementById('f-contact').value.trim();
+  const service = document.getElementById('f-service').value;
+  const comment = document.getElementById('f-comment').value.trim();
+  if (!name || !contact) return;
+  await submitForm(
+    { name, contact, service, comment },
+    document.getElementById('order-success'),
+    document.getElementById('order-form')
+  );
+});
+
+/* Modal form */
+document.getElementById('modal-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const name = document.getElementById('mf-name').value.trim();
+  const contact = document.getElementById('mf-contact').value.trim();
+  const service = document.getElementById('mf-service').value;
+  if (!name || !contact) return;
+  await submitForm(
+    { name, contact, service },
+    document.getElementById('modal-success'),
+    document.getElementById('modal-form')
+  );
+  setTimeout(() => quickModal.classList.remove('open'), 2200);
+});
+
+/* ═══════════════════════════════════════════
+   SMOOTH SCROLL
+═══════════════════════════════════════════ */
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* ═══════════════════════════════════════════
+   CHAT WIDGET
+═══════════════════════════════════════════ */
+(function initChat() {
+  const panel = document.getElementById('chat-panel');
+  const toggle = document.getElementById('chat-toggle');
+  const closeBtn = document.getElementById('chat-close');
+  const messagesEl = document.getElementById('chat-messages');
+  const inputEl = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send');
+  const badge = document.getElementById('chat-badge');
+
+  let isOpen = false, unread = 0, visitorName = null, hasAutoOpened = false;
+
+  function openPanel() {
+    isOpen = true; panel.hidden = false;
+    unread = 0; badge.classList.add('hidden'); badge.textContent = '0';
+    requestAnimationFrame(() => { messagesEl.scrollTop = messagesEl.scrollHeight; });
+  }
+  function closePanel() { isOpen = false; panel.hidden = true; }
+
+  toggle.addEventListener('click', () => isOpen ? closePanel() : openPanel());
+  closeBtn.addEventListener('click', closePanel);
+
+  function timeStr() {
+    return new Date().toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function addMsg(text, type, time) {
+    const msg = document.createElement('div');
+    msg.className = 'chat-msg ' + type;
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble';
+    bubble.textContent = text;
+    const ts = document.createElement('div');
+    ts.className = 'chat-time';
+    ts.textContent = time || timeStr();
+    msg.appendChild(bubble);
+    msg.appendChild(ts);
+    messagesEl.appendChild(msg);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function playChime() {
+    try {
+      const ac = new (window.AudioContext || window.webkitAudioContext)();
+      [[1047, 0, 0.55, 0.18], [784, 0.12, 0.7, 0.12]].forEach(([freq, delay, dur, vol]) => {
+        const osc = ac.createOscillator(), g = ac.createGain();
+        osc.connect(g); g.connect(ac.destination);
+        osc.type = 'sine'; osc.frequency.value = freq;
+        g.gain.setValueAtTime(0, ac.currentTime + delay);
+        g.gain.linearRampToValueAtTime(vol, ac.currentTime + delay + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + dur);
+        osc.start(ac.currentTime + delay);
+        osc.stop(ac.currentTime + dur);
+      });
+    } catch (e) {}
+  }
+
+  function onAdminMsg(data) {
+    const time = data.time
+      ? new Date(data.time).toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' })
+      : timeStr();
+    addMsg(data.text, 'from-admin', time);
+    playChime();
+    if (!hasAutoOpened) { hasAutoOpened = true; openPanel(); return; }
+    if (!isOpen) {
+      unread++;
+      badge.textContent = unread > 9 ? '9+' : String(unread);
+      badge.classList.remove('hidden');
+    }
+  }
+
+  async function sendMessage() {
+    const text = inputEl.value.trim();
+    if (!text) return;
+    inputEl.value = '';
+    sendBtn.disabled = true;
+    addMsg(text, 'from-user');
+    try {
+      const res = await fetch('/api/chat-send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, name: visitorName }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Ошибка сервера');
+    } catch (e) {
+      addMsg('Не удалось доставить сообщение. Попробуйте ещё раз.', 'from-admin');
+    } finally {
+      sendBtn.disabled = false;
+      inputEl.focus();
+    }
+  }
+
+  sendBtn.addEventListener('click', sendMessage);
+  inputEl.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+
+  document.addEventListener('submit', e => {
+    const nameEl = e.target.querySelector('[name="name"]');
+    if (nameEl && nameEl.value.trim()) visitorName = nameEl.value.trim();
+  }, true);
+
+  if (window.EventSource) {
+    const es = new EventSource('/api/chat-stream');
+    es.addEventListener('admin-message', e => {
+      try { onAdminMsg(JSON.parse(e.data)); } catch (err) {}
+    });
+  }
+})();
+</script>
+</body>
+</html>

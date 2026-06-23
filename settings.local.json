@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npm install *)",
+      "Bash(node -e \"require\\('./server'\\)\")",
+      "Bash(curl -s -X POST http://localhost:3000/send -H \"Content-Type: application/json\" -d \"{\\\\\"name\\\\\":\\\\\"Тест\\\\\",\\\\\"contact\\\\\":\\\\\"@test\\\\\"}\")",
+      "Bash(node server.js)",
+      "Bash(curl -s -X POST http://localhost:3500/send -H \"Content-Type: application/json\" -d \"{\\\\\"name\\\\\":\\\\\"Тест\\\\\",\\\\\"contact\\\\\":\\\\\"@test_gulnara\\\\\"}\")",
+      "PowerShell(node \"C:\\\\Users\\\\Гульнара\\\\Claude\\\\Projects\\\\my-vibecoding-agency\\\\server.js\")"
+    ]
+  }
+}
