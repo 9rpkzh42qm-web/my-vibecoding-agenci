@@ -13,15 +13,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:       #07070C;
-      --deep:      #0D0D18;
-      --gold:      #D4AF37;
-      --gold-dim:  #8a7020;
-      --neon:      #6B8CFF;
-      --neon-glow: rgba(107, 140, 255, 0.35);
-      --pulse:     #B06BFF;
-      --white:     #F0EEE8;
-      --mist:      #7A7D8F;
+      --ink:       #04060F;
+      --deep:      #080C1A;
+      --gold:      #2D9CFF;
+      --gold-dim:  #1a5fa0;
+      --neon:      #00C2FF;
+      --neon-glow: rgba(0, 194, 255, 0.35);
+      --pulse:     #7B5BFF;
+      --white:     #E8F0FF;
+      --mist:      #6B7A9F;
 
       --f-display: 'Cinzel', 'Georgia', serif;
       --f-serif:   'Cormorant Garamond', 'Georgia', serif;
@@ -78,7 +78,7 @@
       transition: all 0.3s ease;
     }
     .nav-logo:hover {
-      text-shadow: 0 0 12px rgba(212,175,55,0.6);
+      text-shadow: 0 0 12px rgba(0,194,255,0.6);
     }
     .nav-links {
       display: flex;
@@ -116,7 +116,7 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       padding: 0.75rem 1.8rem;
-      border: 1.5px solid rgba(212,175,55,0.5);
+      border: 1.5px solid rgba(123,91,255,0.5);
       color: var(--gold);
       text-decoration: none;
       border-radius: 6px;
@@ -137,7 +137,7 @@
     .nav-cta:hover {
       color: var(--ink);
       border-color: var(--gold);
-      box-shadow: 0 0 20px rgba(212,175,55,0.4);
+      box-shadow: 0 0 20px rgba(0,194,255,0.35);
     }
     .nav-cta:hover::before {
       transform: scaleX(1);
@@ -200,7 +200,7 @@
     }
     .orbit-ring-1::after {
       background: radial-gradient(circle at 35% 35%, #e8c84b, #7a5500);
-      box-shadow: 0 0 18px rgba(212,175,55,1), 0 0 36px rgba(212,175,55,0.5);
+      box-shadow: 0 0 18px rgba(212,175,55,1), 0 0 36px rgba(123,91,255,0.5);
       animation: particle-pulse 2s ease-in-out infinite;
     }
     .orbit-ring-2::after {
@@ -220,9 +220,9 @@
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 80px; height: 80px;
+      width: 160px; height: 160px;
       object-fit: contain;
-      filter: drop-shadow(0 0 16px rgba(212,175,55,0.5));
+      filter: drop-shadow(0 0 16px rgba(123,91,255,0.5));
       animation: logo-breathe 4s ease-in-out infinite alternate;
       user-select: none;
       transition: transform 0.4s ease;
@@ -234,7 +234,7 @@
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 72px; height: 72px;
+      width: 150px; height: 150px;
       animation: logo-breathe 4s ease-in-out infinite alternate;
     }
     @keyframes logo-breathe {
@@ -290,7 +290,7 @@
       gap: clamp(2rem, 7vw, 5rem);
       margin-top: 3.6rem;
       padding: 2rem;
-      background: linear-gradient(135deg, rgba(212,175,55,0.05), rgba(107,140,255,0.02));
+      background: linear-gradient(135deg, rgba(123,91,255,0.05), rgba(107,140,255,0.02));
       border: 1px solid rgba(212,175,55,0.12);
       border-radius: 16px;
       backdrop-filter: blur(12px);
@@ -317,7 +317,7 @@
       font-size: clamp(1.4rem, 3vw, 2rem);
       font-weight: 700;
       color: var(--gold);
-      text-shadow: 0 0 12px rgba(212,175,55,0.5);
+      text-shadow: 0 0 12px rgba(123,91,255,0.5);
     }
     .hstat-label {
       font-size: 0.55rem;
@@ -341,7 +341,7 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       padding: 1rem 2.2rem;
-      border: 1.5px solid rgba(212,175,55,0.5);
+      border: 1.5px solid rgba(123,91,255,0.5);
       color: var(--gold);
       text-decoration: none;
       border-radius: 8px;
@@ -366,14 +366,14 @@
     .btn-action:hover {
       color: var(--ink);
       border-color: var(--gold);
-      box-shadow: 0 0 24px rgba(212,175,55,0.5);
+      box-shadow: 0 0 24px rgba(123,91,255,0.5);
       transform: translateY(-2px);
     }
     .btn-action:hover::before {
       transform: scaleX(1);
     }
     .btn-action-secondary {
-      background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(107,140,255,0.05));
+      background: linear-gradient(135deg, rgba(123,91,255,0.1), rgba(107,140,255,0.05));
       border-color: rgba(107,140,255,0.4);
       color: var(--neon);
     }
@@ -432,67 +432,149 @@
       margin: 0 auto;
     }
 
+    /* ═══════════════════════════════════════════
+       HOLOGRAM FLOAT ANIMATIONS
+    ═══════════════════════════════════════════ */
+    @keyframes holo-float-a {
+      0%, 100% { transform: translateY(0px) rotate(0.3deg); }
+      50%       { transform: translateY(-18px) rotate(-0.3deg); }
+    }
+    @keyframes holo-float-b {
+      0%, 100% { transform: translateY(-8px) rotate(-0.2deg); }
+      50%       { transform: translateY(12px) rotate(0.4deg); }
+    }
+    @keyframes holo-float-c {
+      0%, 100% { transform: translateY(4px) rotate(0.1deg); }
+      50%       { transform: translateY(-14px) rotate(-0.4deg); }
+    }
+    @keyframes holo-scanline {
+      0%   { top: -20%; opacity: 0.6; }
+      80%  { opacity: 0.3; }
+      100% { top: 110%; opacity: 0; }
+    }
+    @keyframes holo-pulse-border {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 1; }
+    }
+
     .svc-card {
-      background: rgba(13, 13, 24, 0.6);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(212,175,55,0.18);
+      background: rgba(10, 12, 28, 0.35);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(0, 220, 255, 0.28);
       border-radius: 16px;
       padding: 2.4rem;
       position: relative;
       overflow: hidden;
-      transition: all 0.4s var(--ease-out-expo);
-      group: card;
+      transform-style: preserve-3d;
+      will-change: transform;
+      box-shadow:
+        0 0 22px rgba(0, 220, 255, 0.22),
+        0 0 60px rgba(0, 180, 255, 0.08),
+        inset 0 0 18px rgba(0, 220, 255, 0.06);
+      transition: box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
     }
+
+    /* Разные скорости покачивания для каждой карточки */
+    .svc-card:nth-child(1) { animation: holo-float-a 6.5s ease-in-out infinite; }
+    .svc-card:nth-child(2) { animation: holo-float-b 8.2s ease-in-out infinite; }
+    .svc-card:nth-child(3) { animation: holo-float-c 7.1s ease-in-out infinite; }
+    .svc-card:nth-child(4) { animation: holo-float-b 9.0s ease-in-out infinite; }
+    .svc-card:nth-child(5) { animation: holo-float-c 6.8s ease-in-out infinite; }
+    .svc-card:nth-child(6) { animation: holo-float-a 7.6s ease-in-out infinite; }
+
+    /* Верхняя светящаяся линия */
     .svc-card::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(212,175,55,0.05), transparent);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: 0;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,220,255,0.9), rgba(0,194,255,0.6), transparent);
+      animation: holo-pulse-border 3s ease-in-out infinite;
+      z-index: 2;
     }
+
+    /* Бегущая сканлиния */
     .svc-card::after {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.6), transparent);
-      opacity: 0;
-      transition: opacity 0.4s ease;
+      left: 0; right: 0;
+      height: 40px;
+      background: linear-gradient(180deg, transparent, rgba(0,220,255,0.06), transparent);
+      animation: holo-scanline 5s linear infinite;
+      pointer-events: none;
+      z-index: 1;
     }
+    .svc-card:nth-child(2)::after { animation-delay: -1.7s; }
+    .svc-card:nth-child(3)::after { animation-delay: -3.2s; }
+    .svc-card:nth-child(4)::after { animation-delay: -0.9s; }
+    .svc-card:nth-child(5)::after { animation-delay: -2.5s; }
+    .svc-card:nth-child(6)::after { animation-delay: -4.1s; }
+
+    /* Hover — tilt применяется через JS, здесь усиливаем свечение */
     .svc-card:hover {
-      border-color: rgba(212,175,55,0.35);
-      background: rgba(13, 13, 24, 0.8);
-      box-shadow: 0 0 40px rgba(212,175,55,0.2), 0 20px 60px rgba(0,0,0,0.6);
-      transform: translateY(-8px);
+      animation-play-state: paused;
+      border-color: rgba(0, 220, 255, 0.65);
+      background: rgba(10, 12, 28, 0.55);
+      box-shadow:
+        0 0 40px rgba(0, 220, 255, 0.5),
+        0 0 80px rgba(0, 160, 255, 0.2),
+        0 30px 80px rgba(0,0,0,0.7),
+        inset 0 0 30px rgba(0, 220, 255, 0.12);
     }
-    .svc-card:hover::before {
-      opacity: 1;
+
+    /* Золотые карточки (чётные) — тёплое свечение */
+    .svc-card:nth-child(even) {
+      border-color: rgba(123,91,255,0.22);
+      box-shadow:
+        0 0 22px rgba(123,91,255,0.16),
+        0 0 60px rgba(80,50,200,0.07),
+        inset 0 0 18px rgba(123,91,255,0.05);
     }
-    .svc-card:hover::after {
-      opacity: 1;
+    .svc-card:nth-child(even)::before {
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,0.9), rgba(0,220,255,0.4), transparent);
+    }
+    .svc-card:nth-child(even):hover {
+      border-color: rgba(160,130,255,0.7);
+      box-shadow:
+        0 0 40px rgba(123,91,255,0.5),
+        0 0 80px rgba(100,60,255,0.2),
+        0 30px 80px rgba(0,0,0,0.7),
+        inset 0 0 30px rgba(123,91,255,0.1);
     }
 
     .svc-icon {
-      width: 60px;
-      height: 60px;
+      width: 64px;
+      height: 64px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1.5px solid rgba(212,175,55,0.3);
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(107,140,255,0.04));
+      border: none;
+      border-radius: 0;
+      background: transparent;
       margin-bottom: 1.4rem;
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
       position: relative;
       z-index: 1;
+      color: rgba(0, 194, 255, 0.75);
+      filter: drop-shadow(0 0 6px rgba(0,194,255,0.4));
+    }
+    .svc-card:nth-child(even) .svc-icon {
+      color: rgba(123,91,255,0.8);
+      filter: drop-shadow(0 0 6px rgba(123,91,255,0.4));
+    }
+    .svc-card:nth-child(3n) .svc-icon {
+      color: rgba(45,156,255,0.8);
+      filter: drop-shadow(0 0 6px rgba(45,156,255,0.35));
     }
     .svc-card:hover .svc-icon {
-      border-color: rgba(212,175,55,0.6);
-      background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(107,140,255,0.1));
-      box-shadow: 0 0 24px rgba(212,175,55,0.3), 0 0 8px rgba(107,140,255,0.15);
-      transform: scale(1.08);
+      color: rgba(0,220,255,1);
+      filter: drop-shadow(0 0 14px rgba(0,220,255,0.8)) drop-shadow(0 0 28px rgba(0,160,255,0.4));
+      transform: scale(1.12) translateZ(10px);
+    }
+    .svc-card:nth-child(even):hover .svc-icon {
+      color: rgba(160,130,255,1);
+      filter: drop-shadow(0 0 14px rgba(123,91,255,0.9)) drop-shadow(0 0 28px rgba(100,60,255,0.4));
     }
 
     .svc-name {
@@ -521,7 +603,7 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       padding: 0.8rem 1.8rem;
-      border: 1.5px solid rgba(212,175,55,0.4);
+      border: 1.5px solid rgba(0,194,255,0.35);
       color: var(--gold);
       text-decoration: none;
       border-radius: 6px;
@@ -547,7 +629,7 @@
     .btn-svc:hover {
       color: var(--ink);
       border-color: var(--gold);
-      box-shadow: 0 0 16px rgba(212,175,55,0.4);
+      box-shadow: 0 0 16px rgba(0,194,255,0.35);
       transform: translateY(-1px);
     }
     .btn-svc:hover::before {
@@ -569,7 +651,7 @@
       margin: 0 auto;
       background: rgba(13, 13, 24, 0.7);
       backdrop-filter: blur(24px);
-      border: 1px solid rgba(212,175,55,0.25);
+      border: 1px solid rgba(123,91,255,0.22);
       border-radius: 20px;
       padding: 3rem;
       box-shadow: 0 0 60px rgba(212,175,55,0.12), 0 30px 100px rgba(0,0,0,0.7);
@@ -613,7 +695,7 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
       padding: 0.7rem 1.4rem;
-      border: 1px solid rgba(212,175,55,0.25);
+      border: 1px solid rgba(123,91,255,0.22);
       color: var(--mist);
       background: transparent;
       border-radius: 6px;
@@ -623,14 +705,14 @@
       font-weight: 500;
     }
     .svc-tab:hover {
-      border-color: rgba(212,175,55,0.5);
+      border-color: rgba(123,91,255,0.5);
       color: var(--gold);
     }
     .svc-tab.active {
       background: var(--gold);
       color: var(--ink);
       border-color: var(--gold);
-      box-shadow: 0 0 16px rgba(212,175,55,0.4);
+      box-shadow: 0 0 16px rgba(0,194,255,0.35);
     }
 
     .order-form {
@@ -658,7 +740,7 @@
     }
 
     .form-group input:focus, .form-group textarea:focus {
-      border-color: rgba(212,175,55,0.6);
+      border-color: rgba(0,194,255,0.6);
       background: rgba(255,255,255,0.07);
       box-shadow: 0 0 0 3px rgba(212,175,55,0.08), 0 0 20px rgba(212,175,55,0.15);
     }
@@ -689,11 +771,11 @@
       margin-top: 0.6rem;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 0 24px rgba(212,175,55,0.4);
+      box-shadow: 0 0 24px rgba(0,194,255,0.35);
     }
 
     .btn-submit:hover:not(:disabled) {
-      box-shadow: 0 0 40px rgba(212,175,55,0.7), 0 0 80px rgba(212,175,55,0.2);
+      box-shadow: 0 0 40px rgba(160,130,255,0.7), 0 0 80px rgba(212,175,55,0.2);
       transform: translateY(-2px);
     }
 
@@ -835,7 +917,7 @@
 
     .modal-close:hover {
       color: var(--gold);
-      background: rgba(212,175,55,0.1);
+      background: rgba(123,91,255,0.1);
     }
 
     .modal-svc-tag {
@@ -871,7 +953,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 32px rgba(212,175,55,0.6), 0 8px 24px rgba(0,0,0,0.7);
+      box-shadow: 0 0 32px rgba(0,194,255,0.6), 0 8px 24px rgba(0,0,0,0.7);
       transition: all 0.3s ease;
       position: relative;
       flex-shrink: 0;
@@ -945,7 +1027,7 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid rgba(212,175,55,0.15);
-      background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(107,140,255,0.04));
+      background: linear-gradient(135deg, rgba(123,91,255,0.1), rgba(107,140,255,0.04));
       flex-shrink: 0;
     }
 
@@ -967,7 +1049,7 @@
       font-size: 0.95rem;
       font-weight: 700;
       color: var(--ink);
-      box-shadow: 0 0 16px rgba(212,175,55,0.5);
+      box-shadow: 0 0 16px rgba(123,91,255,0.5);
     }
 
     .chat-name {
@@ -1020,7 +1102,7 @@
 
     .chat-close:hover {
       color: var(--gold);
-      background: rgba(212,175,55,0.1);
+      background: rgba(123,91,255,0.1);
     }
 
     .chat-messages {
@@ -1075,8 +1157,8 @@
     }
 
     .from-admin .chat-bubble {
-      background: rgba(212,175,55,0.1);
-      border: 1px solid rgba(212,175,55,0.25);
+      background: rgba(123,91,255,0.1);
+      border: 1px solid rgba(123,91,255,0.22);
       color: var(--white);
       border-radius: 14px 14px 14px 4px;
     }
@@ -1124,7 +1206,7 @@
     }
 
     .chat-input:focus {
-      border-color: rgba(212,175,55,0.5);
+      border-color: rgba(123,91,255,0.5);
       background: rgba(255,255,255,0.08);
       box-shadow: 0 0 0 3px rgba(212,175,55,0.08);
     }
@@ -1141,11 +1223,11 @@
       justify-content: center;
       flex-shrink: 0;
       transition: all 0.2s ease;
-      box-shadow: 0 0 16px rgba(212,175,55,0.4);
+      box-shadow: 0 0 16px rgba(0,194,255,0.35);
     }
 
     .chat-send:hover:not(:disabled) {
-      box-shadow: 0 0 28px rgba(212,175,55,0.7);
+      box-shadow: 0 0 28px rgba(160,130,255,0.7);
       transform: scale(1.08);
     }
 
@@ -1240,42 +1322,79 @@
 
   <div class="svc-grid">
     <article class="svc-card">
-      <div class="svc-icon">🤖</div>
+      <div class="svc-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+  <circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="1.5"/>
+  <circle cx="8"  cy="12" r="3" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+  <circle cx="40" cy="12" r="3" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+  <circle cx="8"  cy="36" r="3" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+  <circle cx="40" cy="36" r="3" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+  <line x1="11" y1="13" x2="19" y2="20" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <line x1="37" y1="13" x2="29" y2="20" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <line x1="11" y1="35" x2="19" y2="28" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <line x1="37" y1="35" x2="29" y2="28" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+</svg></div>
       <h3 class="svc-name">AI-агенты</h3>
       <p class="svc-desc">Разработка интеллектуальных агентов на Anthropic, OpenAI. Автоматизация процессов, чат-боты, поддержка 24/7.</p>
       <button class="btn-svc" data-service="Вайбкодинг / AI-агент">Заказать</button>
     </article>
 
     <article class="svc-card">
-      <div class="svc-icon">✨</div>
+      <div class="svc-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+  <path d="M24 6 L26.5 21.5 L42 24 L26.5 26.5 L24 42 L21.5 26.5 L6 24 L21.5 21.5 Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+  <circle cx="38" cy="10" r="2" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
+  <circle cx="12" cy="38" r="1.5" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+  <circle cx="40" cy="38" r="1" fill="currentColor" opacity="0.5"/>
+</svg></div>
       <h3 class="svc-name">Вайбкодинг</h3>
       <p class="svc-desc">Анимированные сайты, 3D-сцены, WebGL. Дорогие сайты с премиум-ощущением и микро-взаимодействиями.</p>
       <button class="btn-svc" data-service="Вайбкодинг / AI-агент">Заказать</button>
     </article>
 
     <article class="svc-card">
-      <div class="svc-icon">🌐</div>
+      <div class="svc-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+  <circle cx="24" cy="24" r="14" stroke="currentColor" stroke-width="1.5"/>
+  <ellipse cx="24" cy="24" rx="6" ry="14" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+  <line x1="10" y1="24" x2="38" y2="24" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <ellipse cx="24" cy="24" rx="14" ry="5" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+</svg></div>
       <h3 class="svc-name">Сайты & лендинги</h3>
       <p class="svc-desc">Продающие лендинги, корпоративные сайты, e-commerce. Полный цикл: дизайн, разработка, интеграция.</p>
       <button class="btn-svc" data-service="Создать сайт / лендинг">Заказать</button>
     </article>
 
     <article class="svc-card">
-      <div class="svc-icon">📱</div>
+      <div class="svc-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+  <rect x="14" y="6" width="20" height="34" rx="4" stroke="currentColor" stroke-width="1.5"/>
+  <line x1="14" y1="36" x2="34" y2="36" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+  <circle cx="24" cy="40" r="1.5" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
+  <path d="M37 16 Q42 20 37 24" stroke="currentColor" stroke-width="1.2" opacity="0.5" stroke-linecap="round"/>
+  <path d="M39 13 Q46 20 39 27" stroke="currentColor" stroke-width="1" opacity="0.3" stroke-linecap="round"/>
+</svg></div>
       <h3 class="svc-name">Приложения</h3>
       <p class="svc-desc">PWA, мобильные приложения, интеграции с API. Быстрые, масштабируемые решения для мобилы.</p>
       <button class="btn-svc" data-service="Создать приложение">Заказать</button>
     </article>
 
     <article class="svc-card">
-      <div class="svc-icon">📦</div>
+      <div class="svc-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+  <rect x="8" y="20" width="32" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/>
+  <rect x="11" y="14" width="26" height="9"  rx="3" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+  <rect x="14" y="8"  width="20" height="9"  rx="3" stroke="currentColor" stroke-width="1" opacity="0.35"/>
+  <line x1="14" y1="30" x2="24" y2="30" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+</svg></div>
       <h3 class="svc-name">Карточки товаров</h3>
       <p class="svc-desc">Создание описаний для маркетплейсов (Yodo, Ozon, Wildberries). Продающий текст + SEO.</p>
       <button class="btn-svc" data-service="Составить карточки товаров">Заказать</button>
     </article>
 
     <article class="svc-card">
-      <div class="svc-icon">⚡</div>
+      <div class="svc-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+  <path d="M8 24 C8 14 18 8 24 8 C30 8 36 12 38 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M40 24 C40 34 30 40 24 40 C18 40 12 36 10 30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  <polyline points="36,14 38,18 34,20" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <polyline points="12,34 10,30 14,28" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="24" cy="24" r="3" stroke="currentColor" stroke-width="1.5"/>
+</svg></div>
       <h3 class="svc-name">Автоматизация</h3>
       <p class="svc-desc">Бизнес-процессы: n8n, Make, Zapier. Интеграции между сервисами и CRM.</p>
       <button class="btn-svc" data-service="Вайбкодинг / AI-агент">Заказать</button>
@@ -1446,7 +1565,7 @@ function drawFrame() {
 
   // Ambient glow
   const g = ctx.createRadialGradient(w * 0.5, h * 0.25, 0, w * 0.5, h * 0.25, Math.max(w, h) * 0.65);
-  g.addColorStop(0, 'rgba(212,175,55,0.05)');
+  g.addColorStop(0, 'rgba(123,91,255,0.05)');
   g.addColorStop(0.5, 'rgba(107,140,255,0.02)');
   g.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = g;
@@ -1741,6 +1860,38 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       try { onAdminMsg(JSON.parse(e.data)); } catch (err) {}
     });
   }
+})();
+</script>
+
+<script>
+/* ── Hologram 3D Tilt для .svc-card ── */
+(function() {
+  const TILT = 14;
+  const LIFT = 'translateZ(55px) translateY(-12px)';
+
+  document.querySelectorAll('.svc-card').forEach(card => {
+    let raf = null;
+
+    card.addEventListener('mousemove', e => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        const rX =  y * TILT * -1;
+        const rY =  x * TILT;
+        card.style.transform = `perspective(900px) rotateX(${rX}deg) rotateY(${rY}deg) ${LIFT}`;
+        card.style.transition = 'box-shadow 0.2s ease, border-color 0.2s ease';
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      if (raf) cancelAnimationFrame(raf);
+      card.style.transition = 'transform 0.65s cubic-bezier(0.23,1,0.32,1), box-shadow 0.35s ease, border-color 0.35s ease';
+      card.style.transform = '';
+      setTimeout(() => { card.style.transition = ''; }, 680);
+    });
+  });
 })();
 </script>
 </body>
