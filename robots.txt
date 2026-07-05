@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://my-vibecoding-agenci.vercel.app/sitemap.xml
