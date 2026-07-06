@@ -1512,6 +1512,9 @@
         <button type="button" class="svc-tab active" data-svc-id="landing">Сайт/Лендинг</button>
         <button type="button" class="svc-tab" data-svc-id="vibecoding">Вайбкодинг</button>
         <button type="button" class="svc-tab" data-svc-id="app">Приложение</button>
+        <button type="button" class="svc-tab" data-svc-id="cards">Карточки товара</button>
+        <button type="button" class="svc-tab" data-svc-id="book">Написать книгу</button>
+        <button type="button" class="svc-tab" data-svc-id="song">Написать песню</button>
       </div>
 
       <div class="form-group">
@@ -1766,43 +1769,34 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') quickModal.c
    FORM SUBMIT HELPER
 ═══════════════════════════════════════════ */
 async function submitForm({ name, contact, service, comment = '' }, successEl, formEl) {
-    const btn = formEl.querySelector('.btn-submit');
-    btn.disabled = true;
-    btn.classList.add('loading');
+  const btn = formEl.querySelector('.btn-submit');
+  btn.disabled = true;
+  btn.classList.add('loading');
 
-    const token = "8781203688:AAE1LiqgIJ84TkRew2YKBY-EZW9mlRpY1vE";
-    const chat_id = "6080897180";
-    const text = 🔔 Новая заявка!\n👤 Имя: ${name}\n📱 Контакт: ${contact}\n💼 Услуга: ${service}\n💬 Комментарий: ${comment};
-    const url = https://telegram.org{token}/sendMessage;
+  const TG_TOKEN = "8781203688:AAE1LiqgIJ84TkRew2YKBY-EZW9mlRpY1vE";
+  const TG_CHAT = "6080897180";
+  const SVC_HUMAN = { landing: "Сайт/Лендинг", vibecoding: "Вайбкодинг", app: "Приложение", cards: "Карточки товара", book: "Написать книгу", song: "Написать песню" };
+  service = SVC_HUMAN[service] || service;
+  const text = "\u{1F514} Новая заявка с сайта!\n\u{1F464} Имя: " + name +
+               "\n\u{1F4F1} Контакт: " + contact +
+               "\n\u{1F4BC} Услуга: " + service +
+               "\n\u{1F4AC} Комментарий: " + (comment || "—");
 
-    try {
-        const res = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: chat_id, text: text })
-        });
-
-        if (!res.ok) throw new Error('Ошибка отправки в Telegram');
-
-        formEl.style.display = 'none';
-        successEl.classList.add('visible');
-    } catch (data) {
-        alert('Не удалось отправить заявку через Telegram.');
-    } finally {
-        btn.disabled = false;
-        btn.classList.remove('loading');
-    }
-}
+  try {
+    const res = await fetch("https://api.telegram.org/bot" + TG_TOKEN + "/sendMessage", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TG_CHAT, text: text })
     });
     const data = await res.json();
-    if (!data.ok) throw new Error(data.error || 'Ошибка сервера');
-    formEl.style.display = 'none';
-    successEl.classList.add('visible');
-  } catch {
-    alert('Не удалось отправить заявку. Напишите напрямую: @gulnara_gold999');
+    if (!data.ok) throw new Error("Ошибка отправки в Telegram");
+    formEl.style.display = "none";
+    successEl.classList.add("visible");
+  } catch (err) {
+    alert("Не удалось отправить заявку. Напишите напрямую: @gulnara_gold999");
   } finally {
     btn.disabled = false;
-    btn.classList.remove('loading');
+    btn.classList.remove("loading");
   }
 }
 
@@ -1928,10 +1922,10 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     sendBtn.disabled = true;
     addMsg(text, 'from-user');
     try {
-      const res = await fetch('/api/chat-send', {
+      const res = await fetch('https://api.telegram.org/bot8781203688:AAE1LiqgIJ84TkRew2YKBY-EZW9mlRpY1vE/sendMessage', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, name: visitorName }),
+        body: JSON.stringify({ chat_id: '6080897180', text: '\u{1F4AC} Чат на сайте: ' + text }),
       });
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || 'Ошибка сервера');
