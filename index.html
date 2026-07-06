@@ -680,6 +680,24 @@
        ORDER FORM SECTION
     ═══════════════════════════════════════════ */
 
+
+    /* ═══ Портфолио ═══ */
+    #portfolio { padding: 6rem 2rem; }
+    .pf-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem; max-width: 1200px; margin: 0 auto;
+    }
+    .pf-card {
+      border: 1px solid rgba(45,156,255,0.25);
+      border-radius: 16px; overflow: hidden;
+      background: var(--deep);
+      transition: border-color .3s, transform .3s;
+    }
+    .pf-card:hover { border-color: var(--neon); transform: translateY(-4px); }
+    .pf-card img { width: 100%; height: auto; display: block; }
+    .pf-caption { padding: 1rem 1.2rem; color: var(--mist); font-size: .9rem; }
+    .pf-caption strong { color: var(--white); display: block; margin-bottom: .2rem; font-weight: 600; }
     /* ═══ Прайс ═══ */
     #prices { padding: 6rem 2rem; position: relative; }
     .price-grid {
@@ -1463,6 +1481,31 @@
 </section>
 
 
+
+<section id="portfolio" role="region" aria-label="Портфолио">
+  <div class="section-eyebrow">Наши работы</div>
+  <h2 class="section-title">Портфолио</h2>
+  <p class="section-desc">Реальные проекты студии: дизайн для маркетплейсов и брендированная полиграфия</p>
+
+  <div class="pf-grid">
+    <article class="pf-card">
+      <img src="portfolio-cards-price.jpg" alt="Оформление карточек товара для маркетплейсов — Studio Design GRANAT" loading="lazy" />
+      <div class="pf-caption"><strong>Карточки товара</strong>Инфографика и премиальная подача для маркетплейсов</div>
+    </article>
+    <article class="pf-card">
+      <img src="portfolio-sticker-1.jpg" alt="Брендированные наклейки на стаканы 50 мм — Ланч Бокс" loading="lazy" />
+      <div class="pf-caption"><strong>Наклейки «Ланч Бокс»</strong>Брендинг для кофе и напитков, золотое тиснение</div>
+    </article>
+    <article class="pf-card">
+      <img src="portfolio-sticker-2.jpg" alt="Дизайн наклеек для кофейни — вариант в светлой гамме" loading="lazy" />
+      <div class="pf-caption"><strong>Наклейки — светлая серия</strong>Вариант подачи в светлой премиальной гамме</div>
+    </article>
+    <article class="pf-card">
+      <img src="portfolio-sticker-3.jpg" alt="Дизайн наклеек на стаканы — бордовая серия" loading="lazy" />
+      <div class="pf-caption"><strong>Наклейки — бордовая серия</strong>Фирменный стиль Studio Design GRANAT</div>
+    </article>
+  </div>
+</section>
 <section id="prices" role="region" aria-label="Прайс">
   <div class="section-eyebrow">Прозрачные цены</div>
   <h2 class="section-title">Прайс на услуги</h2>
