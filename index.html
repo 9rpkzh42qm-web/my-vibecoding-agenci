@@ -679,6 +679,25 @@
     /* ═══════════════════════════════════════════
        ORDER FORM SECTION
     ═══════════════════════════════════════════ */
+
+    /* ═══ Прайс ═══ */
+    #prices { padding: 6rem 2rem; position: relative; }
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem; max-width: 1200px; margin: 0 auto;
+    }
+    .price-card {
+      border: 1px solid rgba(45,156,255,0.25);
+      border-radius: 16px; padding: 1.8rem;
+      background: linear-gradient(160deg, rgba(8,12,26,0.9), rgba(4,6,15,0.95));
+      transition: border-color .3s, transform .3s;
+    }
+    .price-card:hover { border-color: var(--neon); transform: translateY(-4px); }
+    .price-name { font-family: var(--f-display); color: var(--white); font-size: 1.05rem; margin-bottom: .6rem; }
+    .price-desc { color: var(--mist); font-size: .9rem; line-height: 1.5; margin-bottom: 1rem; }
+    .price-tag  { color: var(--gold); font-size: 1.35rem; font-weight: 600; font-family: var(--f-body); }
+    .price-tag span { color: var(--mist); font-size: .85rem; font-weight: 400; }
     #order-section {
       position: relative;
       z-index: 2;
@@ -1304,6 +1323,7 @@
   <ul class="nav-links">
     <li><a href="#services">Услуги</a></li>
     <li><a href="#portfolio">Портфолио</a></li>
+    <li><a href="#prices">Цены</a></li>
     <li><a href="#contact">Контакты</a></li>
   </ul>
   <a href="#order-section" class="nav-cta">Заказать</a>
@@ -1442,6 +1462,45 @@
   </div>
 </section>
 
+
+<section id="prices" role="region" aria-label="Прайс">
+  <div class="section-eyebrow">Прозрачные цены</div>
+  <h2 class="section-title">Прайс на услуги</h2>
+  <p class="section-desc">Фиксированные цены на популярные услуги. Точный расчёт — после обсуждения задачи</p>
+
+  <div class="price-grid">
+    <article class="price-card">
+      <h3 class="price-name">Карточка товара — обложка</h3>
+      <p class="price-desc">Продающая обложка для Ozon, Wildberries, Яндекс Маркета. Инфографика и премиальная подача.</p>
+      <div class="price-tag">от 700 ₽</div>
+    </article>
+    <article class="price-card">
+      <h3 class="price-name">Карточка товара — 3 слайда</h3>
+      <p class="price-desc">Обложка + 2 слайда с преимуществами товара. Структура под ваш продукт.</p>
+      <div class="price-tag">от 1 700 ₽</div>
+    </article>
+    <article class="price-card">
+      <h3 class="price-name">Карточка товара — 5 слайдов</h3>
+      <p class="price-desc">Полноценная воронка: обложка, преимущества, характеристики, призыв к действию.</p>
+      <div class="price-tag">от 2 700 ₽</div>
+    </article>
+    <article class="price-card">
+      <h3 class="price-name">Карточка товара — 7 слайдов</h3>
+      <p class="price-desc">Максимальная детализация: все свойства товара, отработка возражений, инфографика.</p>
+      <div class="price-tag">от 3 500 ₽</div>
+    </article>
+    <article class="price-card">
+      <h3 class="price-name">Полная упаковка карточки</h3>
+      <p class="price-desc">Обложка, слайды, rich-контент, SEO-описание — всё под ключ для маркетплейса.</p>
+      <div class="price-tag">от 4 500 ₽</div>
+    </article>
+    <article class="price-card">
+      <h3 class="price-name">Наклейки на стаканы 50 мм</h3>
+      <p class="price-desc">Брендированные наклейки для кофе и напитков. Готовый макет, печать 1000 шт, возможен золотой риббон.</p>
+      <div class="price-tag">от 3 500 ₽ <span>/ 1000 шт</span></div>
+    </article>
+  </div>
+</section>
 <section id="order-section" role="region" aria-label="Форма заказа">
   <div class="order-box">
     <div class="order-eyebrow">Начните работать</div>
